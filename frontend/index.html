@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevicePulse Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>DevicePulse Backend</h1>
+      <p>Live charging simulation for Vivo V30, Vivo T2, and Mi PowerBank 3i.</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="controls panel">
+      <h2>Input Controls</h2>
+      <div class="control-row">
+        <label>Charger</label>
+        <select id="charger" aria-label="Charger type">
+          <option value="80W">80W</option>
+          <option value="44W">44W</option>
+        </select>
+      </div>
+
+      <div class="control-row">
+        <label>Device 1</label>
+        <select id="device1">
+          <option value="V30">Vivo V30</option>
+          <option value="T2">Vivo T2</option>
+        </select>
+      </div>
+      <div class="control-row">
+        <label>Battery 1</label>
+        <input id="battery1" type="range" min="0" max="100" value="20" />
+        <span id="battery1Value">20%</span>
+      </div>
+
+      <div class="control-group">
+        <div class="control-row toggle-row">
+          <label>Enable Device 2</label>
+          <input id="device2Enabled" type="checkbox" />
+        </div>
+        <div class="control-row">
+          <label>Device 2</label>
+          <select id="device2" disabled>
+            <option value="T2">Vivo T2</option>
+            <option value="V30">Vivo V30</option>
+          </select>
+        </div>
+        <div class="control-row">
+          <label>Battery 2</label>
+          <input id="battery2" type="range" min="0" max="100" value="40" disabled />
+          <span id="battery2Value">40%</span>
+        </div>
+      </div>
+
+      <div class="control-row toggle-row">
+        <label>PowerBank Active</label>
+        <input id="powerbankEnabled" type="checkbox" />
+      </div>
+      <div class="control-row">
+        <label>PB Battery</label>
+        <input id="pbBattery" type="range" min="0" max="100" value="70" />
+        <span id="pbBatteryValue">70%</span>
+      </div>
+      <div class="control-row toggle-row">
+        <label>PB Input Active</label>
+        <input id="pbInputActive" type="checkbox" checked />
+      </div>
+      <div class="control-row">
+        <label>PB Output Ports</label>
+        <select id="pbOutputPorts">
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+      </div>
+    <section class="panel chart-panel">
+      <h2>Real-time Power Graph</h2>
+      <canvas id="powerChart"></canvas>
+    </section>
+      <h2>System Status</h2>
+      <div class="status-cards">
+        <div class="card" id="device1Card">
+          <h3>Device 1</h3>
+          <p id="device1State">—</p>
+        </div>
+        <div class="card" id="device2Card">
+          <h3>Device 2</h3>
+          <p id="device2State">Disabled</p>
+        </div>
+        <div class="card" id="powerbankCard">
+          <h3>PowerBank</h3>
+          <p id="powerbankState">Disabled</p>
+        </div>
+      </div>
+
+      <div class="flow-panel">
+        <h3>Power Flow</h3>
+        <div class="power-flow">
+          <div class="flow-item charger">Charger</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-item powerbank" id="pbFlow">PowerBank</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-item devices">
+            <div class="device-flow" id="device1Flow">Device 1</div>
+            <div class="device-flow" id="device2Flow">Device 2</div>
+          </div>
+        </div>
+        <div class="leds">
+          <div class="led" id="led1"></div>
+          <div class="led" id="led2"></div>
+          <div class="led" id="led3"></div>
+          <div class="led" id="led4"></div>
+        </div>
+      </div>
+        <h3>Power Flow</h3>
+        <div class="flow-map">
+          <div class="flow-node">Charger</div>
+          <div class="flow-line"></div>
+          <div class="flow-node">PowerBank</div>
+          <div class="flow-line"></div>
+          <div class="flow-node">Devices</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel chart-panel">
+      <h2>Power vs Time</h2>
+      <canvas id="powerChart"></canvas>
+      <div class="warning-box" id="warnings"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
